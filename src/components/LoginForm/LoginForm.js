@@ -2,23 +2,26 @@
 import axios from "axios";
 import { useState } from "react";
 
-export default function LoginForm(props) {
+export default function LoginForm(token) {
   const [searchEmail, set_searchEmail] = useState("");
   const [searchPassword, set_searchPassword] = useState("");
+  const [setToken, set_getToken] = useState("");
 
   const checkLogin = async () => {
-    // try {
-    //   const response = await axios
-    //     .post("/loginForm", {
-    //       email: `${set_searchEmail}`,
-    //       password: `${set_searchPassword}`,
-    //     })
-    //     .then(function (response) {
-    //       console.log(response);
-    //     });
-    // } catch (e) {
-    //   console.log(e.message);
-    // }
+    try {
+      const response = await axios
+        .post("http://localhost:4000/auth/login", {
+          email: searchEmail,
+          password: searchPassword,
+        })
+        .then(function (response) {
+          set_getToken(response.data["token"]);
+          token = setToken;
+          console.log(setToken);
+        });
+    } catch (e) {
+      console.log(e.message);
+    }
     console.log(`email: ${searchEmail}, password: ${searchPassword}`);
   };
 
